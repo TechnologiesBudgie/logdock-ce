@@ -4,21 +4,21 @@ LogDock is a self-hosted log observability platform shipped as a **single Go bin
 
 ## Features
 
-### 🔐 Security
+### Security
 - **TOTP MFA** — RFC 6238 authenticator app support (otpauth:// QR provisioning)
 - **JWT revocation** — Logout invalidates tokens server-side via JTI blocklist
 - **Account lockout** — Configurable max failed attempts + lockout duration per user
 - **AES-256-GCM credential encryption** — Webhook URLs never stored plaintext
 - **Brute-force guard** — Sliding-window IP rate limiting (240/min) with stale-entry cleanup
 
-### 🖥️ UI Features
+### UI Features
 - **Real SSE live tail** — True server-sent events; falls back to polling on disconnect
 - **Audit Log page** — Filterable event table: logins, exports, user mgmt
 - **Keyboard shortcuts** — `/` search, `L` live, `R` refresh, `Esc` close
 - **CSV + NDJSON export** — Direct download from explorer toolbar
 - **User management** — Create, delete, unlock from Settings > Users
 
-### 📊 Observability
+### Observability
 - **Log volume histogram** — Click bar to jump to time window
 - **Top sources chart** — Ingestion breakdown by source
 
