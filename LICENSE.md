@@ -11,7 +11,7 @@ Version 1.0 — 1er janvier 2025
 Licensing & Contact / Licence et contact :
 Technologies Budgie
 Email  : budgie@mailfence.com
-Website: https://technologiesbudgie.page.dev
+Website: https://technologiesbudgie.pages.dev
 
 To inquire about upgrading to the LogDock Enterprise Edition, or to report a
 license violation, contact: budgie@mailfence.com
@@ -748,7 +748,7 @@ SECTION 4 — LICENSE NOTICE REQUIREMENTS / EXIGENCES D'AVIS DE LICENCE
      -------------------------------------------------------------------------
      LogDock Community Edition
      Copyright (C) 2025 Technologies Budgie. All rights reserved.
-     Website: https://technologiesbudgie.page.dev
+     Website: https://technologiesbudgie.pages.dev
      Contact: budgie@mailfence.com
 
      This software is licensed under the LogDock Community Edition License
@@ -757,7 +757,7 @@ SECTION 4 — LICENSE NOTICE REQUIREMENTS / EXIGENCES D'AVIS DE LICENCE
      distribution of Enterprise Features, and creation of competing hosted
      services are prohibited without an Enterprise Edition license.
 
-     Full license text: https://technologiesbudgie.page.dev/licenses/LDCEL
+     Full license text: https://technologiesbudgie.pages.dev/licenses/LDCEL
      -------------------------------------------------------------------------
 
 4.2  PLACEMENT OF NOTICE
@@ -790,7 +790,7 @@ SECTION 4 — LICENSE NOTICE REQUIREMENTS / EXIGENCES D'AVIS DE LICENCE
      -------------------------------------------------------------------------
      LogDock Édition Communautaire
      Copyright (C) 2025 Technologies Budgie. Tous droits réservés.
-     Site web : https://technologiesbudgie.page.dev
+     Site web : https://technologiesbudgie.pages.dev
      Contact : budgie@mailfence.com
 
      Ce logiciel est licencié sous le Contrat de Licence LogDock Édition
@@ -800,7 +800,7 @@ SECTION 4 — LICENSE NOTICE REQUIREMENTS / EXIGENCES D'AVIS DE LICENCE
      de services hébergés concurrents sont interdits sans une licence Édition
      Entreprise.
 
-     Texte complet de la licence : https://technologiesbudgie.page.dev/licenses/LDLEC
+     Texte complet de la licence : https://technologiesbudgie.pages.dev/licenses/LDLEC
      -------------------------------------------------------------------------
 
 4.2  EMPLACEMENT DE L'AVIS
@@ -1205,7 +1205,7 @@ SECTION 9 — DUAL LICENSING / DOUBLE LICENCE
      at:
 
          Email  : budgie@mailfence.com
-         Website: https://technologiesbudgie.page.dev
+         Website: https://technologiesbudgie.pages.dev
 
      Enterprise licenses are negotiated on a case-by-case basis and may include
      per-seat, per-node, per-deployment, revenue-based, or other pricing models
@@ -1250,7 +1250,7 @@ SECTION 9 — DUAL LICENSING / DOUBLE LICENCE
      Budgie à :
 
          Courriel : budgie@mailfence.com
-         Site web : https://technologiesbudgie.page.dev
+         Site web : https://technologiesbudgie.pages.dev
 
      Les licences entreprise sont négociées au cas par cas et peuvent inclure
      des modèles de tarification par siège, par nœud, par déploiement, basés sur
@@ -1626,7 +1626,7 @@ SECTION 14 — ENFORCEMENT / APPLICATION
      communications, whether written or oral, relating to the subject matter
      hereof. No amendment to this Agreement shall be binding unless made in
      writing and published by Technologies Budgie at
-     https://technologiesbudgie.page.dev.
+     https://technologiesbudgie.pages.dev.
 
 14.7 FUTURE VERSIONS OF THIS LICENSE
      Technologies Budgie may publish revised versions of this License from time
@@ -1688,7 +1688,7 @@ SECTION 14 — ENFORCEMENT / APPLICATION
      antérieurs ou contemporains, qu'ils soient écrits ou oraux, relatifs à
      l'objet des présentes. Aucun amendement au présent Contrat ne sera
      contraignant à moins d'être fait par écrit et publié par Technologies
-     Budgie à https://technologiesbudgie.page.dev.
+     Budgie à https://technologiesbudgie.pages.dev.
 
 14.7 VERSIONS FUTURES DE LA PRÉSENTE LICENCE
      Technologies Budgie peut publier des versions révisées de la présente
@@ -1717,7 +1717,7 @@ SECTION 15 — MISCELLANEOUS / DISPOSITIONS DIVERSES
      and delivered to Technologies Budgie at budgie@mailfence.com. Notices
      delivered by email are effective upon confirmation of receipt. Technologies
      Budgie may provide notices to Licensees through publication on
-     https://technologiesbudgie.page.dev or through a notice in the Software's
+     https://technologiesbudgie.pages.dev or through a notice in the Software's
      release notes.
 
 15.3 FORCE MAJEURE
@@ -1756,7 +1756,7 @@ SECTION 15 — MISCELLANEOUS / DISPOSITIONS DIVERSES
      faits par écrit et transmis à Technologies Budgie à budgie@mailfence.com.
      Les avis transmis par courriel sont effectifs dès confirmation de réception.
      Technologies Budgie peut fournir des avis aux Licenciés par publication sur
-     https://technologiesbudgie.page.dev ou par un avis dans les notes de
+     https://technologiesbudgie.pages.dev ou par un avis dans les notes de
      publication du Logiciel.
 
 15.3 FORCE MAJEURE
@@ -1790,4 +1790,4 @@ FIN DU CONTRAT DE LICENCE LOGDOCK ÉDITION COMMUNAUTAIRE
 
 Copyright © 2026 Technologies Budgie
 Licensed under the LogDock Community Edition License. / Licencé sous LogDock Community Edition License.    
-https://technologiesbudgie.page.dev | budgie@mailfence.com
+https://technologiesbudgie.pages.dev | budgie@mailfence.com
