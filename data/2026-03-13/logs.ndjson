@@ -1,0 +1,1 @@
+{"id":"f66d307b4f4a3b87a93c3bf81114faf0","timestamp":"2026-03-13T22:09:12.115525186Z","source":"syslog-udp","level":"info","stream_id":"default","message":"\u003c13\u003e1 2026-03-13T18:09:12.115466-04:00 pop-os raphael - - [timeQuality tzKnown=\"1\" isSynced=\"1\" syncAccuracy=\"32883\"] i sneezed. lmao"}

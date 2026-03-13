@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  logdock:
+    build: .
+    image: logdock:latest
+    ports:
+      - "2514:2514"
+      - "4317:4317"
+      - "4318:4318"
+      - "5140:5140/tcp"
+      - "5140:5140/udp"
+    environment:
+      LOGDOCK_DATA_DIR: /data
+      LOGDOCK_ADMIN_PASSWORD: admin
+      LOGDOCK_JWT_SECRET: super-secret-change-me
+    volumes:
+      - ./data:/data

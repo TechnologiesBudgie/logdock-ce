@@ -1,0 +1,6 @@
+{
+  "name": "logdock-ui",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {"build": "echo build with vite"}
+}

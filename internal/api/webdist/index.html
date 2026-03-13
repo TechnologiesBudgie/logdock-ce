@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LogDock CE</title>
+<script src="i18n.js"></script>
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1f2937;
+  --border: #2d3748;
+  --accent: #3b82f6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --green: #10b981;
+  --red: #ef4444;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-primary); color: var(--text-primary); font-family: system-ui, sans-serif; font-size: 13px; height: 100vh; display: flex; overflow: hidden; }
+#sidebar { width: 200px; background: var(--bg-secondary); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+.logo { padding: 20px; font-weight: 800; font-size: 16px; color: var(--accent); border-bottom: 1px solid var(--border); }
+.nav-item { padding: 12px 20px; cursor: pointer; color: var(--text-secondary); transition: 0.1s; }
+.nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+.nav-item.active { background: rgba(59,130,246,0.1); color: var(--accent); font-weight: 600; }
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+#topbar { height: 52px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; justify-content: space-between; }
+#content { flex: 1; overflow-y: auto; padding: 24px; }
+.page { display: none; }
+.page.active { display: block; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.card { background: #161e2e; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.metric-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px; }
+.metric-value { font-size: 24px; font-weight: 700; }
+.btn { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-tertiary); color: var(--text-primary); cursor: pointer; font-size: 12px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.log-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.log-table th { text-align: left; padding: 8px; border-bottom: 1px solid var(--border); font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
+.log-table td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: top; font-family: monospace; }
+.form-field { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+.form-field label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
+.form-field input { background: #0a0e18; border: 1px solid var(--border); border-radius: 6px; color: #fff; padding: 8px; outline: none; }
+#login-screen { position: fixed; inset: 0; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.login-box { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 320px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <h2 style="margin-bottom:20px" data-i18n="login_welcome">LogDock CE</h2>
+    <div class="form-field"><input type="text" id="l-u" data-i18n="lbl_username" placeholder="Username"></div>
+    <div class="form-field"><input type="password" id="l-p" data-i18n="lbl_password" placeholder="Password"></div>
+    <button class="btn primary" style="width:100%" onclick="doLogin()" data-i18n="btn_signin">Sign In</button>
+  </div>
+</div>
+
+<nav id="sidebar">
+  <div class="logo">LogDock CE</div>
+  <div style="flex:1; padding-top:10px">
+    <div class="nav-item active" onclick="nav('dashboard')" data-i18n="nav_dashboard">Dashboard</div>
+    <div class="nav-item" onclick="nav('explorer')" data-i18n="nav_explorer">Log Explorer</div>
+    <div class="nav-item" onclick="nav('alerts')" data-i18n="nav_alerts">Alerts</div>
+    <div class="nav-item" onclick="nav('settings')" data-i18n="nav_settings">Settings</div>
+  </div>
+  <div style="padding:20px; border-top:1px solid var(--border)">
+    <button class="btn" style="width:100%" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div id="main">
+  <div id="topbar">
+    <div id="page-title" style="font-weight:600">Dashboard</div>
+    <button class="btn" onclick="refreshPage()" data-i18n="btn_refresh">Refresh</button>
+  </div>
+  <div id="content">
+    <!-- Dashboard -->
+    <div class="page active" id="page-dashboard">
+      <div class="metric-grid">
+        <div class="card"><div class="metric-label" data-i18n="stat_total">Total Logs</div><div class="metric-value" id="m-total">0</div></div>
+        <div class="metric-card card"><div class="metric-label" data-i18n="stat_errors">Errors</div><div class="metric-value" id="m-errors" style="color:var(--red)">0</div></div>
+        <div class="card"><div class="metric-label" data-i18n="stat_disk">Disk Usage</div><div class="metric-value" id="m-disk">0</div></div>
+      </div>
+      <div class="card">
+        <div class="metric-label">Recent Events</div>
+        <table class="log-table"><tbody id="dash-logs"></tbody></table>
+      </div>
+    </div>
+    <!-- Explorer -->
+    <div class="page" id="page-explorer">
+      <div class="card" style="display:flex; gap:10px; margin-bottom:20px">
+        <input type="text" id="q" style="flex:1; background:transparent; border:none; color:#fff; outline:none" data-i18n="placeholder_search" placeholder="Search logs...">
+        <button class="btn primary" onclick="loadLogs()">Search</button>
+      </div>
+      <div class="card">
+        <table class="log-table">
+          <thead><tr><th style="width:160px">Time</th><th style="width:80px">Level</th><th>Message</th></tr></thead>
+          <tbody id="logs"></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Alerts -->
+    <div class="page" id="page-alerts">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
+        <div class="card"><div class="metric-label" data-i18n="alerts_active">Rules</div><div id="rules"></div></div>
+        <div class="card"><div class="metric-label" data-i18n="alerts_triggered">History</div><div id="history"></div></div>
+      </div>
+    </div>
+    <!-- Settings -->
+    <div class="page" id="page-settings">
+      <div class="card" style="max-width:500px">
+        <div class="form-field"><label data-i18n="set_instance_name">Instance Name</label><input type="text" id="s-name"></div>
+        <div class="form-field"><label data-i18n="set_retention">Retention (days)</label><input type="number" id="s-days"></div>
+        <div class="form-field"><label data-i18n="lbl_webhook_url">Slack Webhook</label><input type="text" id="s-slack"></div>
+        <button class="btn primary" onclick="saveSettings()" data-i18n="btn_save_changes">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let TOKEN = localStorage.getItem('logdock_token');
+let currentPage = 'dashboard';
+
+async function api(url, opts = {}) {
+  opts.headers = { ...(opts.headers||{}), 'Authorization': `Bearer ${TOKEN}` };
+  if (opts.body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+  const res = await fetch(url, opts);
+  if (res.status === 401) logout();
+  if (res.status === 204) return {};
+  return res.json();
+}
+
+function nav(p) {
+  currentPage = p;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.querySelector(`[onclick="nav('${p}')"]`).classList.add('active');
+  document.getElementById('page-'+p).classList.add('active');
+  window.currentPage = p; applyTranslations();
+  if (p === 'dashboard') loadDashboard();
+  if (p === 'explorer') loadLogs();
+  if (p === 'alerts') loadAlerts();
+  if (p === 'settings') loadSettings();
+}
+
+async function doLogin() {
+  const res = await fetch('/api/v1/auth/login', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username:v('l-u'), password:v('l-p')})
+  });
+  const d = await res.json();
+  if (d.token) { TOKEN = d.token; localStorage.setItem('logdock_token', d.token); showApp(); }
+}
+
+function showApp() { document.getElementById('login-screen').style.display='none'; nav('dashboard'); }
+function logout() { localStorage.removeItem('logdock_token'); location.reload(); }
+function v(id) { return document.getElementById(id).value; }
+function refreshPage() { nav(currentPage); }
+
+async function loadDashboard() {
+  const m = await api('/api/v1/metrics');
+  document.getElementById('m-total').textContent = m.metrics.totalIngested.toLocaleString();
+  document.getElementById('m-errors').textContent = m.metrics.errorCount.toLocaleString();
+  document.getElementById('m-disk').textContent = (m.metrics.diskBytes / 1024 / 1024).toFixed(1) + ' MB';
+  const l = await api('/api/v1/logs/tail');
+  document.getElementById('dash-logs').innerHTML = l.rows.slice(0,10).map(r => `<tr><td>${r.timestamp.slice(11,19)}</td><td style="color:${lvl(r.level)}">${r.level}</td><td>${r.message}</td></tr>`).join('');
+}
+
+async function loadLogs() {
+  const d = await api('/api/v1/logs/search?q='+encodeURIComponent(v('q'))+'&limit=100');
+  document.getElementById('logs').innerHTML = d.rows.map(r => `<tr><td>${r.timestamp.replace('T',' ').slice(0,19)}</td><td style="color:${lvl(r.level)}">${r.level}</td><td>${r.message}</td></tr>`).join('');
+}
+
+async function loadAlerts() {
+  const r = await api('/api/v1/alerts');
+  document.getElementById('rules').innerHTML = r.rules.map(x => `<div style="padding:10px 0; border-bottom:1px solid #2d3748"><b>${x.name}</b><br><small>${x.condition}</small></div>`).join('');
+  const h = await api('/api/v1/alerts/history');
+  document.getElementById('history').innerHTML = h.reverse().map(x => `<div style="padding:10px 0; border-bottom:1px solid #2d3748">${x.rule} <span style="float:right; color:var(--text-dim)">${x.timestamp.slice(11,19)}</span></div>`).join('');
+}
+
+async function loadSettings() {
+  const s = await api('/api/v1/settings');
+  document.getElementById('s-name').value = s.instance_name;
+  document.getElementById('s-days').value = s.retention.maxDays;
+  document.getElementById('s-slack').value = s.webhooks.slackUrl || '';
+}
+
+async function saveSettings() {
+  await api('/api/v1/settings', { method:'PUT', body: {
+    instance_name: v('s-name'),
+    retention: { maxDays: parseInt(v('s-days')) },
+    webhooks: { slackUrl: v('s-slack') },
+    storage: { dataDir: './data' }, // keep constant in CE
+    security: { sessionHours: 12 }
+  }});
+  alert('Settings saved');
+}
+
+function lvl(l) {
+  l = l.toUpperCase();
+  if (l==='ERROR'||l==='FATAL') return '#ef4444';
+  if (l==='WARN'||l==='WARNING') return '#f59e0b';
+  return '#3b82f6';
+}
+
+if (TOKEN) showApp(); else document.getElementById('login-screen').style.display='flex';
+initI18n();
+</script>
+</body>
+</html>
