@@ -1788,5 +1788,6 @@ END OF LOGDOCK COMMUNITY EDITION LICENSE AGREEMENT
 FIN DU CONTRAT DE LICENCE LOGDOCK ÉDITION COMMUNAUTAIRE
 ================================================================================
 
-Copyright (C) 2025 Technologies Budgie. All rights reserved. / Tous droits réservés.
+Copyright © 2026 Technologies Budgie
+Licensed under the LogDock Community Edition License. / Licencé sous LogDock Community Edition License.    
 https://technologiesbudgie.page.dev | budgie@mailfence.com
