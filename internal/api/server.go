@@ -5,11 +5,13 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"net/http"
 	"path"
 	"strings"
 	"time"
 
+	securejoin "github.com/cyphar/filepath-securejoin"
 	"logdock/internal/alerts"
 	"logdock/internal/audit"
 	"logdock/internal/auth"
@@ -766,7 +768,14 @@ async function login() {
 </html>`
 
 func (s *Server) handleUI(w http.ResponseWriter, r *http.Request) {
-	p := strings.TrimPrefix(path.Clean(r.URL.Path), "/")
+	userPath := strings.TrimPrefix(path.Clean(r.URL.Path), "/")
+	p, err := securejoin.SecureJoin("webdist", userPath)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	p = strings.TrimPrefix(p, "webdist/")
+
 	isHTML := p == "" || p == "." || p == "index.html" || (!strings.Contains(p, ".") && !strings.HasPrefix(p, "api/"))
 
 	headers := w.Header()
@@ -797,7 +806,8 @@ func (s *Server) handleUI(w http.ResponseWriter, r *http.Request) {
 
 		headers.Set("Content-Type", "text/html; charset=utf-8")
 		if !authenticated {
-			_, _ = w.Write([]byte(loginPageHTML))
+			tpl, _ := template.New("login").Parse(loginPageHTML)
+			_ = tpl.Execute(w, nil)
 			return
 		}
 		b, err := webFS.ReadFile("webdist/index.html")
@@ -805,7 +815,8 @@ func (s *Server) handleUI(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "app not found", http.StatusInternalServerError)
 			return
 		}
-		_, _ = w.Write(b)
+		tpl, _ := template.New("index").Parse(string(b))
+		_ = tpl.Execute(w, nil)
 		return
 	}
 
@@ -815,6 +826,8 @@ func (s *Server) handleUI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	switch {
+	case strings.HasSuffix(p, ".html"):
+		headers.Set("Content-Type", "text/html; charset=utf-8")
 	case strings.HasSuffix(p, ".js"):
 		headers.Set("Content-Type", "application/javascript")
 	case strings.HasSuffix(p, ".css"):
@@ -822,7 +835,13 @@ func (s *Server) handleUI(w http.ResponseWriter, r *http.Request) {
 	case strings.HasSuffix(p, ".svg"):
 		headers.Set("Content-Type", "image/svg+xml")
 	}
-	_, _ = w.Write(b)
+
+	if strings.HasSuffix(p, ".html") {
+		tpl, _ := template.New("page").Parse(string(b))
+		_ = tpl.Execute(w, nil)
+	} else {
+		_, _ = w.Write(b)
+	}
 }
 
 func (s *Server) handleAuthLogin(w http.ResponseWriter, r *http.Request) { s.handleLogin(w, r) }
