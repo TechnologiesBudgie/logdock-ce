@@ -1,5 +1,7 @@
 # LogDock Community Edition
-
+  
+*This software comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.*
+  
 LogDock is a self-hosted log observability platform shipped as a **single Go binary** with embedded admin UI and full CLI parity. No external dependencies.
 
 ## Features
